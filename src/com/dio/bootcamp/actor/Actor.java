@@ -2,24 +2,59 @@ package com.dio.bootcamp.actor;
 
 import com.dio.bootcamp.activity.Activity;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Actor {
     private static int SERIAL = 1;
 
     protected String name;
     protected int id;
-    protected List<Activity> activities = new ArrayList<>();
+    protected LinkedHashSet<Activity> activities = new LinkedHashSet<>();
 
+    public Actor(String name, LinkedHashSet<Activity> activitiesIn){
+        this.name = name;
+        this.id = SERIAL++;
+        for(Activity activity : activitiesIn){
+            activities.add(activity.clone());
+        }
+    }
 
+    public String getName() {
+        return name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public LinkedHashSet<Activity> getActivities() {
+        return activities;
+    }
+
+    public void setActivities(LinkedHashSet<Activity> activities) {
+        this.activities = activities;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Actor actor = (Actor) o;
+        return id == actor.id && Objects.equals(name, actor.name) && Objects.equals(activities, actor.activities);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, id, activities);
+    }
+}
+
+/* Old Code
+    //Constructor
     public Actor(String name) {
         this.name = name;
         this.id = SERIAL++;
     }
-    //############Generic Gets and Sets############
 
     public int getId() {
         return id;
@@ -33,10 +68,9 @@ public class Actor {
         this.name = name;
     }
 
-    //############Other Methods############
     //Activities List manipulation
-    public void addActivity(Activity activity){
-        activities.add(activity);
+    public void addActivity(Activity course){
+        activities.add(course.clone());
     }
 
     public void rmActivity(int activityId){
@@ -47,7 +81,7 @@ public class Actor {
         this.activities.removeIf(activity -> activity.getId() == activityId);
     }
 
-    public int findActivityCaller(String name){
+    public int findActivity(String name){
         Iterator<Activity> finder = activities.iterator();
         Activity tempActivity;
         String aName;
@@ -59,4 +93,4 @@ public class Actor {
         }
         return -1;
     }
-}
+ */

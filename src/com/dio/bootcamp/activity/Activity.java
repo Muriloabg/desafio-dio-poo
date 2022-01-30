@@ -1,17 +1,20 @@
 package com.dio.bootcamp.activity;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
-public class Activity {
-    private static int SERIAL = 1;
+public abstract class Activity implements Cloneable{
+    protected static int SERIAL = 1;
+    protected static final double BASE_XP = 20d;
 
-    private String name;
-    private int id;
-    private String desc;
+    protected String name;
+    protected int id;
+    protected String desc;
 
+    //Constructor
     public Activity(String name, String desc) {
         this.name = name;
-        id = SERIAL++;
+        this.id = SERIAL++;
         this.desc = desc;
     }
 
@@ -37,13 +40,12 @@ public class Activity {
         this.desc = desc;
     }
 
-    public int giveXP(){
-        int XP = 1;
-
-        return XP;
+    //Returns the XP value of the activity, it is overridden on all subclasses
+    public double giveXP(){
+        return BASE_XP;
     }
 
-    //
+    //Generic to String, but also prints its subclasses additional values
     @Override
     public String toString() {
         return "Activity{" +
@@ -69,5 +71,30 @@ public class Activity {
                 ", desc='" + desc + '\'' +
                 ", credits=" + credits +
                 '}';
+    }
+
+    //Clone method, overridden on its subclasses
+    @Override
+    public Activity clone() {
+        try {
+            Activity clone = (Activity) super.clone();
+            // TODO: copy mutable state here, so the clone can't change the internals of the original
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Activity)) return false;
+        Activity activity = (Activity) o;
+        return id == activity.id && Objects.equals(name, activity.name) && Objects.equals(desc, activity.desc);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, id, desc);
     }
 }
