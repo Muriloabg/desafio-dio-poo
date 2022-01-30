@@ -2,7 +2,6 @@ package com.dio.bootcamp.actor;
 
 import com.dio.bootcamp.activity.Activity;
 
-import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Objects;
 
@@ -14,7 +13,7 @@ public class Dev extends Actor{
         super(name, activities);
     }
 
-    //Sets the boolean finished to true
+    //Add an activity to the completed list
     public void finishActivity(String aName){
         for(Activity activity : super.activities){
             if(Objects.equals(activity.getName(), aName)) {

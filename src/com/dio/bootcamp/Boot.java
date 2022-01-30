@@ -8,8 +8,6 @@ import com.dio.bootcamp.actor.Dev;
 import com.dio.bootcamp.actor.Instructor;
 
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.LinkedHashSet;
 
 public class Boot {
